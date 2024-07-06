@@ -3,8 +3,10 @@ import 'package:closet_control/features/calendar/calendar_page.dart';
 import 'package:closet_control/features/closet/closet_page.dart';
 import 'package:closet_control/features/home/home_page.dart';
 import 'package:closet_control/features/profile/profile_page.dart';
+import 'package:closet_control/providers/clothes_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const ClosetControl());
@@ -29,68 +31,74 @@ class _ClosetControlState extends State<ClosetControl> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 640),
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: lightTheme,
-          home: Scaffold(
-            backgroundColor: Colors.white,
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ClothesProvider()),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(360, 640),
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            home: Scaffold(
               backgroundColor: Colors.white,
-              elevation: 0,
-              title: const Text('Closet Control'),
+              resizeToAvoidBottomInset: false,
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                title: const Text('Closet Control'),
+              ),
+              body: Center(
+                  child: ClosetControl.pages.elementAt(_currentIndexNavBar)),
+              bottomNavigationBar: NavigationBarTheme(
+                data: NavigationBarThemeData(
+                    indicatorColor: Colors.purple.shade100),
+                child: NavigationBar(
+                    selectedIndex: _currentIndexNavBar,
+                    labelBehavior:
+                        NavigationDestinationLabelBehavior.alwaysHide,
+                    backgroundColor: Colors.white,
+                    onDestinationSelected: (index) =>
+                        setState(() => _currentIndexNavBar = index),
+                    destinations: const [
+                      NavigationDestination(
+                          icon: Icon(
+                            Icons.home_outlined,
+                            size: 32,
+                          ),
+                          selectedIcon: Icon(Icons.home, size: 32),
+                          label: 'Home'),
+                      NavigationDestination(
+                          icon: Icon(
+                            Icons.checkroom_outlined,
+                            size: 32,
+                          ),
+                          selectedIcon: Icon(Icons.checkroom, size: 32),
+                          label: 'Closet'),
+                      NavigationDestination(
+                          icon: Icon(
+                            Icons.calendar_month_outlined,
+                            size: 32,
+                          ),
+                          selectedIcon: Icon(Icons.calendar_month, size: 32),
+                          label: 'Calendar'),
+                      NavigationDestination(
+                          icon: Icon(
+                            Icons.person_outline,
+                            size: 32,
+                          ),
+                          selectedIcon: Icon(
+                            Icons.person,
+                            size: 32,
+                          ),
+                          label: 'Profile')
+                    ]),
+              ),
             ),
-            body: Center(
-                child: ClosetControl.pages.elementAt(_currentIndexNavBar)),
-            bottomNavigationBar: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                  indicatorColor: Colors.purple.shade100),
-              child: NavigationBar(
-                  selectedIndex: _currentIndexNavBar,
-                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-                  backgroundColor: Colors.white,
-                  onDestinationSelected: (index) =>
-                      setState(() => _currentIndexNavBar = index),
-                  destinations: const [
-                    NavigationDestination(
-                        icon: Icon(
-                          Icons.home_outlined,
-                          size: 32,
-                        ),
-                        selectedIcon: Icon(Icons.home, size: 32),
-                        label: 'Home'),
-                    NavigationDestination(
-                        icon: Icon(
-                          Icons.checkroom_outlined,
-                          size: 32,
-                        ),
-                        selectedIcon: Icon(Icons.checkroom, size: 32),
-                        label: 'Closet'),
-                    NavigationDestination(
-                        icon: Icon(
-                          Icons.calendar_month_outlined,
-                          size: 32,
-                        ),
-                        selectedIcon: Icon(Icons.calendar_month, size: 32),
-                        label: 'Calendar'),
-                    NavigationDestination(
-                        icon: Icon(
-                          Icons.person_outline,
-                          size: 32,
-                        ),
-                        selectedIcon: Icon(
-                          Icons.person,
-                          size: 32,
-                        ),
-                        label: 'Profile')
-                  ]),
-            ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

@@ -1,10 +1,14 @@
+import 'package:closet_control/core/add_clothing_page.dart';
 import 'package:closet_control/features/home/weather_model.dart';
 import 'package:closet_control/features/home/weather_service.dart';
+import 'package:closet_control/providers/clothes_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:closet_control/config/environments.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:developer';
+
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -102,7 +106,20 @@ class _HomePageState extends State<HomePage> {
                         getWeatherAnimation(_weather?.mainCondition)),
                   )
                 ],
-              )
+              ),
+              Text(context.watch<ClothesProvider>().allClothes.toString()),
+              // TextButton(
+              //     onPressed: () {
+              //       context.read<ClothesProvider>().addClothing(
+              //           id: 'dasisteineid', name: 'tshirt', brand: 'zara');
+              //     },
+              //     child: const Text('drück mich')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddClothingPage()));
+                  },
+                  child: const Text('neue kleidung erfassen'))
             ],
           ),
         ),
