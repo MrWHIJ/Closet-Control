@@ -107,19 +107,87 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              Text(context.watch<ClothesProvider>().allClothes.toString()),
+              // Text(context.watch<ClothesProvider>().allClothes.toString()),
               // TextButton(
               //     onPressed: () {
               //       context.read<ClothesProvider>().addClothing(
               //           id: 'dasisteineid', name: 'tshirt', brand: 'zara');
               //     },
               //     child: const Text('drück mich')),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AddClothingPage()));
-                  },
-                  child: const Text('neue kleidung erfassen'))
+              SizedBox(
+                height: 50.h,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddClothingPage()));
+                },
+                child: Container(
+                  height: 150.h,
+                  width: 500.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.sp)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        // offset: Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20.w, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 180.h,
+                          width: 180.w,
+                          child: Lottie.asset(
+                              'assets/lottie/other/add_new_clothes.json'),
+                        ),
+                        const Text('Neues\nKleidungsstück\nhinzufügen')
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Container(
+                height: 150.h,
+                width: 500.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.sp)),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      // offset: Offset(0, 2), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text('Neues\nOutfit\nhinzufügen'),
+                      SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Lottie.asset(
+                            'assets/lottie/other/add_new_outfit.json'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

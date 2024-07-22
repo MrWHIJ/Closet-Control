@@ -128,6 +128,30 @@ class _AddClothingPageState extends State<AddClothingPage> {
                       SizedBox(
                         height: 8.h,
                       ),
+                      // const DropdownMenu(
+                      //   label: Text('Farbe'),
+                      //   dropdownMenuEntries: <DropdownMenuEntry<Color>>[
+                      //     DropdownMenuEntry(value: Colors.white, label: 'Weiß'),
+                      //     DropdownMenuEntry(
+                      //         value: Colors.black, label: 'Schwarz'),
+                      //   ],
+                      // ),
+                      // TODO fertig machen
+                      TextFormField(
+                        controller: _colorController,
+                        decoration: InputDecoration(
+                            labelText: 'Color',
+                            border: const OutlineInputBorder(),
+                            prefixIcon: const Icon(Icons.color_lens),
+                            suffixIcon: DropdownButton<String>(
+                              icon: const Icon(Icons.arrow_drop_down),
+                              onChanged: (String? newValue) {},
+                              items: [DropdownMenuItem(child: Text('Test'))],
+                            )),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
                       TextFormField(
                         controller: _colorController,
                         decoration: const InputDecoration(
