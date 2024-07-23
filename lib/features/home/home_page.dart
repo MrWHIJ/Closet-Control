@@ -1,14 +1,11 @@
 import 'package:closet_control/core/add_clothing_page.dart';
 import 'package:closet_control/features/home/weather_model.dart';
 import 'package:closet_control/features/home/weather_service.dart';
-import 'package:closet_control/providers/clothes_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:closet_control/config/environments.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:developer';
-
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,19 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _weatherService = WeatherService(apiKey);
   Weather? _weather;
-
-  // _fetchWeather() async {
-  //   String cityName = await _weatherService.getCurrentCity();
-
-  //   try {
-  //     final weather = await _weatherService.getWeather(cityName);
-  //     setState(() {
-  //       _weather = weather;
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   _fetchWeather() async {
     List<double> coordinates = await _weatherService.getCurrentCoordinates();
@@ -148,7 +132,11 @@ class _HomePageState extends State<HomePage> {
                           child: Lottie.asset(
                               'assets/lottie/other/add_new_clothes.json'),
                         ),
-                        const Text('Neues\nKleidungsstück\nhinzufügen')
+                        Text(
+                          'Neues\nKleidungsstück\nhinzufügen',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.sp),
+                        )
                       ],
                     ),
                   ),
@@ -177,7 +165,11 @@ class _HomePageState extends State<HomePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text('Neues\nOutfit\nhinzufügen'),
+                      Text(
+                        'Neues\nOutfit\nhinzufügen',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16.sp),
+                      ),
                       SizedBox(
                         height: 200.h,
                         width: 200.w,

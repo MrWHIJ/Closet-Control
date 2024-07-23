@@ -34,12 +34,14 @@ class _ClosetPageState extends State<ClosetPage> {
                       mainAxisSpacing: 16),
                   itemBuilder: (contex, index) {
                     return ClothingCard(
-                      image: allClothes[index].image,
-                      name: allClothes[index].name,
-                      brand: allClothes[index].brand,
-                      size: allClothes[index].size,
-                      color: allClothes[index].size,
-                    );
+                        id: allClothes[index].id,
+                        image: allClothes[index].image,
+                        type: allClothes[index].type,
+                        brand: allClothes[index].brand,
+                        size: allClothes[index].size,
+                        color: allClothes[index].color,
+                        price: allClothes[index].price,
+                        note: allClothes[index].note);
                   },
                 ),
               )

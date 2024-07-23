@@ -4,20 +4,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
-class AddClothingPage extends StatefulWidget {
-  const AddClothingPage({super.key});
+class EditClothingPage extends StatefulWidget {
+  final String id;
+  final File image;
+  final String type;
+  final String brand;
+  final String size;
+  final Color color;
+  final int price;
+  final String note;
+
+  const EditClothingPage(
+      {super.key,
+      required this.id,
+      required this.image,
+      required this.type,
+      required this.brand,
+      required this.size,
+      required this.color,
+      required this.price,
+      required this.note});
 
   @override
-  State<AddClothingPage> createState() => _AddClothingPageState();
+  State<EditClothingPage> createState() => _EditClothingPageState();
 }
 
-class _AddClothingPageState extends State<AddClothingPage> {
-  var uuid = const Uuid();
+class _EditClothingPageState extends State<EditClothingPage> {
+  String? _idValue;
   final TextEditingController _brandController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _idValue = widget.id;
+    _selectedImage = widget.image;
+    _typeValue = widget.type;
+    _brandController.text = widget.brand;
+    _sizeValue = widget.size;
+    _colorValue = widget.color;
+    _priceController.text = widget.price.toString();
+    _noteController.text = widget.note;
+  }
+
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
 
@@ -73,6 +104,30 @@ class _AddClothingPageState extends State<AddClothingPage> {
     {'value': 'XXL', 'label': 'XXL'},
   ];
 
+  Future<void> _showDeleteDialog() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Willst Du das Kleidungsstück wirklich löschen?'),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Nein')),
+              TextButton(
+                  onPressed: () {
+                    context
+                        .read<ClothesProvider>()
+                        .deleteClothing(id: _idValue!);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Ja'))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -89,10 +144,28 @@ class _AddClothingPageState extends State<AddClothingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Neues Kleidungsstück',
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Neues Kleidungsstück',
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.bold),
+                    ),
+                    PopupMenuButton(
+                        itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: const Text('Verkaufen'),
+                                onTap: () {},
+                              ),
+                              PopupMenuItem(
+                                child: const Text('Löschen'),
+                                onTap: () {
+                                  _showDeleteDialog();
+                                },
+                              ),
+                            ])
+                  ],
                 ),
                 TextButton(
                     onPressed: _pickImageFromGallery,
@@ -251,8 +324,8 @@ class _AddClothingPageState extends State<AddClothingPage> {
                             onPressed: () {
                               if (_formKey.currentState!.validate() &&
                                   _selectedImage != null) {
-                                context.read<ClothesProvider>().addClothing(
-                                    id: uuid.v4(),
+                                context.read<ClothesProvider>().editClothing(
+                                    id: _idValue!,
                                     image: _selectedImage!,
                                     type: _typeValue!,
                                     brand: _brandController.text,
