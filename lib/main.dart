@@ -4,6 +4,7 @@ import 'package:closet_control/features/closet/closet_page.dart';
 import 'package:closet_control/features/home/home_page.dart';
 import 'package:closet_control/features/profile/profile_page.dart';
 import 'package:closet_control/providers/clothes_provider.dart';
+import 'package:closet_control/providers/outfit_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,7 @@ class _ClosetControlState extends State<ClosetControl> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ClothesProvider()),
+        ChangeNotifierProvider(create: (context) => OutfitProvider()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 640),
@@ -53,7 +55,7 @@ class _ClosetControlState extends State<ClosetControl> {
                   child: ClosetControl.pages.elementAt(_currentIndexNavBar)),
               bottomNavigationBar: NavigationBarTheme(
                 data: NavigationBarThemeData(
-                    indicatorColor: Colors.purple.shade100),
+                    indicatorColor: Colors.purple.shade200),
                 child: NavigationBar(
                     selectedIndex: _currentIndexNavBar,
                     labelBehavior:

@@ -1,28 +1,35 @@
-import 'package:closet_control/core/edit_clothing_page.dart';
 import 'package:closet_control/features/closet/clothing_card.dart';
 import 'package:closet_control/providers/clothes_provider.dart';
+import 'package:closet_control/providers/outfit_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ClosetPage extends StatefulWidget {
-  const ClosetPage({super.key});
+class AddItemToOutfitPage extends StatefulWidget {
+  const AddItemToOutfitPage({super.key});
 
   @override
-  State<ClosetPage> createState() => _ClosetPageState();
+  State<AddItemToOutfitPage> createState() => _AddItemToOutfitPageState();
 }
 
-class _ClosetPageState extends State<ClosetPage> {
+class _AddItemToOutfitPageState extends State<AddItemToOutfitPage> {
   @override
   Widget build(BuildContext context) {
     List allClothes = context.watch<ClothesProvider>().allClothes;
 
     return SafeArea(
-      child: Scaffold(
+        child: Scaffold(
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        body: Padding(
+        elevation: 0,
+        title: const Text('Kleidungsstück wählen'),
+      ),
+      body: Padding(
           padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: GridView.builder(
@@ -36,16 +43,16 @@ class _ClosetPageState extends State<ClosetPage> {
                   itemBuilder: (contex, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => EditClothingPage(
-                                id: allClothes[index].id,
-                                image: allClothes[index].image,
-                                type: allClothes[index].type,
-                                brand: allClothes[index].brand,
-                                size: allClothes[index].size,
-                                color: allClothes[index].color,
-                                price: allClothes[index].price,
-                                note: allClothes[index].note)));
+                        context.read<OutfitProvider>().addItemToOutfit(
+                            id: allClothes[index].id,
+                            image: allClothes[index].image,
+                            type: allClothes[index].type,
+                            brand: allClothes[index].brand,
+                            size: allClothes[index].size,
+                            color: allClothes[index].color,
+                            price: allClothes[index].price,
+                            note: allClothes[index].note);
+                        Navigator.pop(context);
                       },
                       child: ClothingCard(
                           id: allClothes[index].id,
@@ -61,9 +68,7 @@ class _ClosetPageState extends State<ClosetPage> {
                 ),
               )
             ],
-          ),
-        ),
-      ),
-    );
+          )),
+    ));
   }
 }

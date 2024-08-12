@@ -1,11 +1,15 @@
 import 'package:closet_control/core/add_clothing_page.dart';
+import 'package:closet_control/core/add_outfit_page.dart';
 import 'package:closet_control/features/home/weather_model.dart';
 import 'package:closet_control/features/home/weather_service.dart';
+import 'package:closet_control/providers/outfit_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:closet_control/config/environments.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:developer';
+
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -145,38 +149,45 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 15.h,
               ),
-              Container(
-                height: 150.h,
-                width: 500.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.sp)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      // offset: Offset(0, 2), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Neues\nOutfit\nhinzufügen',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16.sp),
-                      ),
-                      SizedBox(
-                        height: 200.h,
-                        width: 200.w,
-                        child: Lottie.asset(
-                            'assets/lottie/other/add_new_outfit.json'),
+              GestureDetector(
+                onTap: () {
+                  context.read<OutfitProvider>().clearNewOutfit();
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddOutfitPage()));
+                },
+                child: Container(
+                  height: 150.h,
+                  width: 500.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.sp)),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        // offset: Offset(0, 2), // changes position of shadow
                       ),
                     ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20.w, 0, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Neues\nOutfit\nhinzufügen',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.sp),
+                        ),
+                        SizedBox(
+                          height: 200.h,
+                          width: 200.w,
+                          child: Lottie.asset(
+                              'assets/lottie/other/add_new_outfit.json'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
