@@ -49,7 +49,13 @@ class _ClosetControlState extends State<ClosetControl> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 elevation: 0,
-                title: const Text('Closet Control'),
+                title: Text(
+                  'ClosetControl',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.purple.shade200),
+                ),
               ),
               body: Center(
                   child: ClosetControl.pages.elementAt(_currentIndexNavBar)),
