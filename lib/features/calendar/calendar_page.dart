@@ -52,17 +52,6 @@ class _CalendarPageState extends State<CalendarPage> {
                   }
                 },
               ),
-              // Text(_focusedDay.toString()),
-              // Text(allOutfits.indexWhere(
-              //             (outfit) => outfit.dateTime == _focusedDay) !=
-              //         -1
-              //     ? allOutfits[allOutfits.indexWhere(
-              //             (outfit) => outfit.dateTime == _focusedDay)]
-              //         .toString()
-              //     : 'Fehler'),
-              // Text(allOutfits.isNotEmpty
-              //     ? allOutfits[0].dateTime.toString()
-              //     : 'Fehler'),
               SizedBox(
                 height: 20.h,
               ),

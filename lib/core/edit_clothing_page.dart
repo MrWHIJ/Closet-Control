@@ -52,6 +52,7 @@ class _EditClothingPageState extends State<EditClothingPage> {
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
 
+  /// Returns an image selected from the devices gallery.
   Future _pickImageFromGallery() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -62,6 +63,7 @@ class _EditClothingPageState extends State<EditClothingPage> {
     }
   }
 
+  /// Returns an image taken with the camera.
   Future _pickImageFromCamera() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.camera);
@@ -104,6 +106,7 @@ class _EditClothingPageState extends State<EditClothingPage> {
     {'value': 'XXL', 'label': 'XXL'},
   ];
 
+  /// Shows a dialog to confirm the deletion of a clothing item.
   Future<void> _showDeleteDialog() async {
     return showDialog(
         context: context,

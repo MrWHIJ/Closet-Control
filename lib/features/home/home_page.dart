@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
   final _weatherService = WeatherService(apiKey);
   Weather? _weather;
 
-  _fetchWeather() async {
+  /// Fetches the current weather using [_weatherService].
+  void fetchWeather() async {
     List<double> coordinates = await _weatherService.getCurrentCoordinates();
     String latitude = coordinates[0].toString();
     String longitude = coordinates[1].toString();
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  /// Returns a fitting weather animation.
   String getWeatherAnimation(String? mainCondition) {
     if (mainCondition == null) return "assets/lottie/weather/loading.json";
 
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _fetchWeather();
+    fetchWeather();
   }
 
   @override

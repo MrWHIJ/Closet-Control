@@ -21,6 +21,7 @@ class _AddClothingPageState extends State<AddClothingPage> {
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
 
+  /// Returns an image selected from the devices gallery.
   Future _pickImageFromGallery() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -31,6 +32,7 @@ class _AddClothingPageState extends State<AddClothingPage> {
     }
   }
 
+  /// Returns an image taken with the camera.
   Future _pickImageFromCamera() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.camera);
